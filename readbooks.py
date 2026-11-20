@@ -1,11 +1,17 @@
-import maxheap as mh
+from myheap import Heap
 
-maxheap = mh.BinaryHeap()
+max_heap = Heap(max_heap=True)
+
 with open ('books.txt', 'r') as file:
-    books = file.readlines()
-    for line in books:
-        line_list = line.strip().split(",")
-        print(line_list)
-        maxheap.push(int(line_list[0]), line_list[1])
+    for line in file:
+        downloads, title = line.rstrip("\n").split(",")
+        max_heap.push(int(downloads), title)
 
-print(maxheap.peek())
+k=100
+min_heap = Heap(False, k)
+
+with open ('books.txt', 'r') as file:
+    for line in file:
+        downloads, title = line.rstrip("\n").split(",")
+        min_heap.push(int(downloads), title)
+
