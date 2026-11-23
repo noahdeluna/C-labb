@@ -1,5 +1,6 @@
 from myheap import Heap
 import timeit
+import tracemalloc
 
 
 def max(k):
@@ -37,14 +38,10 @@ def result(k):
     bottom_books = min(k)
     print_top_books(bottom_books)
 
+def measure_memory(function, k):
+        tracemalloc.start()
+        result = function(k)
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
 
-if __name__ == "__main__":
-    k= 10
-    result(k)
-    
-
-    bintid = timeit.timeit(stmt = lambda: max(k), number = 100)
-    print(f"Alternativ 1 där n = 75000 och k = {k} tog", round(bintid, 4) , "sekunder")
-
-    bintid = timeit.timeit(stmt = lambda: min(k), number = 100)
-    print(f"Alternativ 2 där n = 75000 och k = {k} tog", round(bintid, 4) , "sekunder")
+        return peak / 1000000  # MB
